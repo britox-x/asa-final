@@ -1,0 +1,27 @@
+@   IN  SOA ns.asa.br. admin.asa.br. (
+            1 ; Serial
+            3H ; Refresh
+            1H ; Retry
+            1W ; Expire
+            1D ; Minimum TTL
+)
+
+
+@   IN  MX  10 mail.asa.br.
+@   IN  NS      ns.asa.br.
+
+
+ns      IN  A  10.24.9.74  ;alterar IPs para a máquina local
+mail    IN  A  10.24.9.74 
+www     IN  A  10.24.9.74 
+
+smtp    IN  CNAME   mail
+imap    IN  CNAME   mail
+pop     IN  CNAME   mail
+
+portal          IN  CNAME   www
+barra           IN  CNAME   www
+webmail         IN  CNAME   www
+forte           IN  CNAME   www
+ifrn            IN  CNAME   www
+touros          IN  CNAME   www

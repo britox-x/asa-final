@@ -1,0 +1,165 @@
+version: '3.8'
+
+services: 
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    image: web
+    container_name: web
+    networks:
+      - asa-net
+
+  dns:
+    build:
+      context: ./dns
+      dockerfile: Dockerfile
+    image: dns
+    container_name: dns
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    networks:
+      - asa-net
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: proxy
+    container_name: proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - webmail
+      - wordpress
+      - wordpress2
+    networks:
+      - asa-net
+    volumes: 
+      - ./proxy/certs:/etc/ssl/certs
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    restart: always
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - asa-net
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - asa-net
+
+  wordpress2:
+    image: wordpress
+    container_name: wordpress2
+    restart: always
+    depends_on:
+      - db2
+    environment:
+      WORDPRESS_DB_HOST: db2
+      WORDPRESS_DB_USER: exampleuser2
+      WORDPRESS_DB_PASSWORD: examplepass2
+      WORDPRESS_DB_NAME: exampledb2
+    volumes:
+      - wordpress2:/var/www/html
+    networks:
+      - asa-net
+
+  db2:
+    image: mysql:8.0
+    container_name: db2
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb2
+      MYSQL_USER: exampleuser2
+      MYSQL_PASSWORD: examplepass2
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db2:/var/lib/mysql
+    networks:
+      - asa-net
+
+  email:
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    image: email
+    container_name: email
+    ports:
+      - "25:25/tcp"
+      - "587:587/tcp"
+      - "110:110/tcp"
+      - "143:143/tcp" 
+    networks:
+      - asa-net
+
+  db3:
+    image: mariadb:10.6
+    container_name: db3
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - db3:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+    networks:
+      - asa-net
+
+  ssh:
+    build:
+      context: ./ssh
+      dockerfile: Dockerfile
+    image: ssh
+    container_name: ssh
+    ports:
+      - "2222:22"
+    networks:
+      - asa-net
+
+  webmail:
+    build: 
+      context: ./webmail
+      dockerfile: Dockerfile
+    image: webmail
+    container_name: webmail
+    volumes:
+      - webmail:/var/www/html
+    networks:
+      - asa-net
+
+volumes:
+  wordpress:
+  db:
+  wordpress2:
+  db2:
+  webmail:
+  db3:
+  roundcube_data:
+
+networks:
+  asa-net:
+    driver: bridge

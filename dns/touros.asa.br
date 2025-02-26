@@ -1,0 +1,18 @@
+echo '$TTL    604800
+@       IN      SOA     ns.touros.com.br. root.touros.com.br. (
+                           202408205  ; Serial
+                           604800      ; Refresh
+                           86400       ; Retry
+                           2419200     ; Expire
+                           604800 )    ; Negative Cache TTL
+;
+@       IN      MX      10 mail.touros.com.br.
+@       IN      NS      ns.touros.com.br.
+
+ns      IN      A       10.24.9.74  ; Substitua pelo IP real
+mail    IN      A       10.24.9.74  ; Substitua pelo IP real
+www     IN      A       10.24.9.74   ; Substitua pelo IP real
+
+smtp    IN      CNAME   mail
+imap    IN      CNAME   mail
+pop     IN      CNAME   mail' > /etc/bind/touros.com.br.zone
