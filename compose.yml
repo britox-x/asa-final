@@ -1,4 +1,5 @@
 
+
 services: 
   web:
     build:
@@ -39,7 +40,7 @@ services:
       - asa-net
     volumes: 
       - ./proxy/certs:/etc/ssl/certs
-
+      
   wordpress:
     image: wordpress:latest
     container_name: wordpress
@@ -48,12 +49,12 @@ services:
       - db
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: ${MYSQL_USER}  # Variáveis do arquivo .env
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
     volumes:
       - wordpress:/var/www/html
-      - ./client1/wp-config.php:/var/www/html/wp-config.php
+
     networks:
       - asa-net
 
@@ -62,29 +63,29 @@ services:
     container_name: db
     restart: always
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Senha para o root
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - db:/var/lib/mysql
     networks:
       - asa-net
 
   wordpress2:
-    image: wordpress:latest
+    image: wordpress
     container_name: wordpress2
     restart: always
     depends_on:
       - db2
     environment:
       WORDPRESS_DB_HOST: db2
-      WORDPRESS_DB_USER: ${MYSQL_USER2}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD2}
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE2}
+      WORDPRESS_DB_USER: exampleuser2
+      WORDPRESS_DB_PASSWORD: examplepass2
+      WORDPRESS_DB_NAME: exampledb2
     volumes:
       - wordpress2:/var/www/html
-      - ./client2/wp-config.php:/var/www/html/wp-config.php
+      
     networks:
       - asa-net
 
@@ -93,15 +94,15 @@ services:
     container_name: db2
     restart: always
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE2}
-      MYSQL_USER: ${MYSQL_USER2}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD2}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Senha para o root
+      MYSQL_DATABASE: exampledb2
+      MYSQL_USER: exampleuser2
+      MYSQL_PASSWORD: examplepass2
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - db2:/var/lib/mysql
     networks:
-      - asa-net   
-      
+      - asa-net
+
   email:
     build:
       context: ./email

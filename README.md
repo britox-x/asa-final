@@ -34,9 +34,9 @@ O Projeto Asa é implementado em um ambiente Docker, que oferece portabilidade e
 
 ### Tecnologias Empregadas
 
-- HTML: 36.7%
-- Dockerfile: 31.2%
-- PHP: 19.4%
-- Shell: 12.7%
+- **HTML:** 36.7%
+- **Dockerfile:** 31.2%
+- **PHP:** 19.4%
+- **Shell:** 12.7%
 
 ## Estrutura do Diretório
