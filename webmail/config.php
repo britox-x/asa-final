@@ -19,12 +19,13 @@ $CONFIG = array (
   ),
   'upgrade.disable-web' => true,
   'instanceid' => 'ocu42rj8ajr9',
-  'passwordsalt' => 'ei6znmK43utPYG2JB7br6VcD0a5Ub1',
-  'secret' => 'eMgFJyfHzEUR0Is35RIrsHkU1U3bpSgbmp1um25rNJFDDDmp',
+  'passwordsalt' => 'gerar-novo-salt-aqui',
+  'secret' => 'gerar-novo-secreto-aqui',
   'trusted_domains' => 
   array (
     0 => 'localhost:8080',
-    1 => 'webmail.ifrn.asa.br',
+    1 => 'webmail.asa.br/',
+    //2 => 'seu-novo-dominio.com', // Adicione seu domínio
   ),
   'datadirectory' => '/var/www/html/data',
   'dbtype' => 'mysql',
@@ -39,9 +40,9 @@ $CONFIG = array (
   'dbpassword' => 'admin',
   'installed' => true,
   'app.mail.verify-tls-peer' => false,
-  'mail_smtpdebug' => true,
-  'loglevel' => 0, // Mude para 0 em produção
-  'debug' => true, // Corrigido de 'debud' para 'debug'
+  'mail_smtpdebug' => false, // Defina como false em produção
+  'loglevel' => 2, // Mude para 2 em produção
+  'debug' => false, // Defina como false em produção
   'mail_smtpmode' => 'smtp',
   'mail_sendmailmode' => 'smtp',
   'mail_from_address' => 'teste',

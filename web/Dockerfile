@@ -1,7 +1,7 @@
 FROM nginx:latest
 
 COPY index.html /usr/share/nginx/html/index.html
-COPY azul.png preto.png roxo.png favicon.png /usr/share/nginx/html/
+COPY azul.png preto.png roxo.png /usr/share/nginx/html/
 
 # Exposição da porta
 EXPOSE 80

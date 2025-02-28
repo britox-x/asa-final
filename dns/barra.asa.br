@@ -9,9 +9,9 @@ echo '$TTL    604800
 @       IN      MX      10 mail.barra.com.br.
 @       IN      NS      ns.barra.com.br.
 
-ns      IN      A       10.24.9.74   ; Substitua pelo IP real
-mail    IN      A       10.24.9.74   ; Substitua pelo IP real
-www     IN      A       10.24.9.74   ; Substitua pelo IP real
+ns      IN      A       192.168.1.68   ; Substitua pelo IP real
+mail    IN      A       192.168.1.68  ; Substitua pelo IP real
+www     IN      A       192.168.1.68  ; Substitua pelo IP real
 
 smtp    IN      CNAME   mail
 imap    IN      CNAME   mail
