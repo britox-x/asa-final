@@ -1,0 +1,31 @@
+zone "projeto.asa.br" {
+    type master;
+    file "/etc/bind/db.projeto.asa.br";
+    allow-transfer {
+        127.0.0.1;
+    };
+};
+
+zone "barra.asa.br" {
+    type master;
+    file "/etc/bind/db.barra.asa.br";
+    allow-transfer {
+        127.0.0.1;
+    };
+};
+
+zone "touros.asa.br" {
+    type master;
+    file "/etc/bind/db.touros.asa.br";
+    allow-transfer {
+        127.0.0.1;
+    };
+};
+
+zone "forte.asa.br" {
+    type master;
+    file "/etc/bind/db.forte.asa.br";
+    allow-transfer {
+        127.0.0.1;
+    };
+};

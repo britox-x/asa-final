@@ -1,0 +1,46 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: db_web1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - provedor_asa-net
+
+  web1: #Renomear depois, caso queira
+    image: wordpress:latest
+    container_name: web1 #Renomear depois, caso queira
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db_web1
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - provedor_asa-net
+
+  ssh:
+    build:
+      context: ./ssh
+      dockerfile: Dockerfile
+    container_name: ssh-cliente1
+    ports:
+      - "2023:22"
+    networks:
+      - provedor_asa-net
+
+volumes:
+  db:
+  wordpress:
+
+networks:
+  provedor_asa-net:
+    external: true

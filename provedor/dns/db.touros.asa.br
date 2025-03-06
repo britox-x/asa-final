@@ -1,0 +1,15 @@
+$TTL    604800
+@       IN      SOA     ns.touros.asa.br. root.touros.asa.br. (
+                           3           ; Serial
+                           604800      ; Refresh
+                           86400       ; Retry
+                           2419200     ; Expire
+                           604800 )    ; Negative Cache TTL
+;
+@       IN      NS      ns.touros.asa.br.
+@       IN      MX      10 mail.touros.asa.br.
+@       IN      A       192.168.1.68
+ns      IN      A       192.168.1.68
+mail    IN      A       192.168.1.68
+www     IN      A       192.168.1.68
+portal  IN      CNAME   touros.asa.br.

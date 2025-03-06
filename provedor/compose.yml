@@ -1,0 +1,75 @@
+services: 
+  dns:
+    build:
+      context: ./dns
+      dockerfile: Dockerfile
+    container_name: dns
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - ./dns/named.conf.local:/etc/bind/named.conf.local
+    networks:
+      - asa-net
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: proxy
+    ports:
+      - "80:80"
+      - "443:443"
+#    depends_on:
+#      - web1
+#      - web2
+    networks:
+      - asa-net
+    volumes: 
+      - ./proxy/certs:/etc/ssl/certs
+
+  web:
+    build:
+      context: ./web_inicial
+      dockerfile: Dockerfile
+    container_name: web
+    networks:
+      - asa-net
+
+  email:
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    container_name: email
+    ports:
+      - "25:25/tcp"
+      - "587:587/tcp"
+      - "110:110/tcp"
+      - "143:143/tcp"
+    networks:
+      - asa-net
+
+  ssh:
+    build:
+      context: ./ssh
+      dockerfile: Dockerfile
+    image: ssh
+    container_name: ssh_provedor
+    ports:
+      - "2222:22"
+    networks:
+      - asa-net
+
+#  webmail:
+#    build: 
+#      context: ./webmail
+#      dockerfile: Dockerfile
+#    container_name: webmail
+#    volumes:
+#      - webmail:/var/www/html
+#    networks:
+#      - asa-net
+
+networks:
+  asa-net:
+    driver: bridge
